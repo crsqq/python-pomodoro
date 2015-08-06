@@ -1,6 +1,10 @@
 # python-pomodoro
 small app for pomodoro technique with gui and gnome notification
 
+![application](screenshots/application.png)
+
+![notification](screenshots/notification.png)
+
 # usage
 ```
 #install dependencies
