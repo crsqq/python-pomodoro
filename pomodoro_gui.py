@@ -4,9 +4,6 @@
 from gi.repository import Gtk, Notify, GObject
 
 import logging
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
 import time
 import threading
 import os
@@ -31,7 +28,10 @@ class PomodoroGui:
 
         #text entry box for timer duration
         self.timer_value = self.builder.get_object("timer_entry")
-        self.timer_value.set_text("1")
+        #self.timer_value.set_text("1")
+
+        rb1 = self.builder.get_object("rb1")
+        rb1.set_active(True)
 
         #run button
 
@@ -71,6 +71,13 @@ class PomodoroGui:
     def on_button_cancel_clicked(self, button, data=None):
         self.pomodoro_timer.running = False
 
+    def radiobutton_toggle(self, widget):
+        rb_values = {'rb1':'25',
+                'rb2':'5',
+                'rb3':'15'}
+        if widget.get_active():
+            selected_button = Gtk.Buildable.get_name(widget)
+            self.timer_value.set_text(rb_values[selected_button])
 
     #callbacks
     def timer_on_off_callback(self, is_now_running):
@@ -87,8 +94,7 @@ class PomodoroGui:
 
     def time_left_callback(self, time_left):
         logging.debug("time_left: %s" % time_left)
-        #TODO format time properly
-        self.time_left.set_text("%02.0f:%02.0f" % (time_left //60, time_left % 60 ))
+        GObject.idle_add(lambda: self.time_left.set_text("%02.0f:%02.0f" % (time_left //60, time_left % 60 )))
 
 
 class PomodoroTimer:
@@ -108,9 +114,9 @@ class PomodoroTimer:
     def make_notification(self, duration):
         self.running = True
         while(self.time_left > 0):
+            time.sleep(1)
             if(not self.running):
                 return False
-            time.sleep(1)
             self.time_left -= 1
 
         Notify.init("pomodoro.py")
@@ -125,7 +131,6 @@ class PomodoroTimer:
 
     @property
     def running(self):
-        print("running getter called")
         return self._running
 
     @running.setter
@@ -160,6 +165,10 @@ class PomodoroTimer:
 
 
 if __name__ == "__main__":
+    FORMAT = "[%(levelname)s %(filename)s:%(lineno)s - %(funcName)20s() ] %(message)s"
+    logging.basicConfig(level=logging.DEBUG, format=FORMAT)
+    logger = logging.getLogger(__name__)
+
     GObject.threads_init()
     main = PomodoroGui()
     Gtk.main()
