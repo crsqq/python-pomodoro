@@ -18,7 +18,7 @@ class PomodoroGui:
         self.builder.connect_signals(self)
 
         self.window = self.builder.get_object("root_window")
-        #self.aboutdialog = self.builder.get_object("aboutdialog1")
+        self.aboutdialog = self.builder.get_object("aboutdialog1")
         #self.statusbar = self.builder.get_object("statusbar1")
         #self.context_id = self.statusbar.get_context_id("status")
 
@@ -120,8 +120,8 @@ class PomodoroTimer:
             self.time_left -= 1
 
         Notify.init("pomodoro.py")
-        main_text = "Time is up."
-        summary_text = "summary text"
+        main_text = "Pomodoro Timer"
+        summary_text = "Time is up."
 
         notification = Notify.Notification.new(main_text, summary_text, None)
         notification.show()
