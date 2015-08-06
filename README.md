@@ -2,4 +2,11 @@
 small app for pomodoro technique with gui and gnome notification
 
 # usage
-`python3 pomodoro_gui.py`
+```
+#install dependencies
+sudo apt-get install python3-gi
+
+git clone https://github.com/crsqq/python-pomodoro
+cd python-pomodoro
+python3 pomodoro_gui.py
+```
