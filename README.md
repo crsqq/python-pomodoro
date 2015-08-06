@@ -1,5 +1,5 @@
 # python-pomodoro
-small app for pomodoro technique with gui and gnome notification
+small app for [pomodoro technique](https://en.wikipedia.org/wiki/Pomodoro_Technique) with gui and gnome notification
 
 ![application](screenshots/application.png)
 
