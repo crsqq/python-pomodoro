@@ -125,7 +125,7 @@ class PomodoroTimer:
 
         notification = Notify.Notification.new(main_text, summary_text, None)
         notification.show()
-        os.system("espeak 'Time is up.'")
+        os.system("aplay --quiet static/notification01.wav")
         self.running = False
 
 
